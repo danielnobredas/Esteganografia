@@ -8,15 +8,15 @@ $(PROG): $(OBJS)
 
 	mod.o:
 		$(CC) $(CFLAGS) -c mod.h
-	fatorial.o:
+	ppm.o:
 		$(CC) $(CFLAGS) -c ppm.c
 	main.o:
-		$(CC) $(CFLAGS) -c main.c
-	maiorprimoanterior.o:
+		$(CC) $(CFLAGS) -c projet.c
+	bpm.o:
 		$(CC) $(CFLAGS) -c bpm.c
-	primalidade.o:
+	png.o:
 		$(CC) $(CFLAGS) -c png.c
-	primo.o:
+	jpg.o:
 		$(CC) $(CFLAGS) -c jpg.c
 	clean:
 		rm -f core $(PROG) $(OBJS)
