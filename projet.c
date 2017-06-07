@@ -49,17 +49,17 @@ typedef struct tagBITMAPINFO
 	RGBQUAD bmiColors;
 }BITMAPINFO;
 
-typedef{
-	int **imagem;
-}Png;
+// typedef{
+// 	int **imagem;
+// }Png;
 
  struct ppm{
-	char code[3];
+	char code;
 	int max;
 	int largura;
 	int altura;
- 	struct pixel imagem;
-}Ppm;
+ 	struct pixel **imagem;
+}*Ppm;
 
 
 void ler_ppm(struct ppm *Ppm){
@@ -77,16 +77,16 @@ void ler_ppm(struct ppm *Ppm){
     }
 
 
-		fscanf(arquivo, "%s", Ppm->code);
-		fscanf(arquivo, "%d", Ppm->largura);
-		fscanf(arquivo, "%d", Ppm->altura);
-		fscanf(arquivo, "%d", Ppm->max);
+		fscanf(arquivo, "%s", &Ppm->code);
+		fscanf(arquivo, "%d", &Ppm->largura);
+		fscanf(arquivo, "%d", &Ppm->altura);
+		fscanf(arquivo, "%d", &Ppm->max);
 
 		for (i = 0; i < Ppm->altura; i++) {
 			 for (j = 0; j < Ppm->largura; j++) {
-					 fscanf(arquivo, "%d", Ppm->imagem[i][j].r);
-					 fscanf(arquivo, "%d", Ppm->imagem[i][j].g);
-					 fscanf(arquivo, "%d", Ppm->imagem[i][j].b);
+					 fscanf(arquivo, "%d", &Ppm->imagem[i][j].r);
+					 fscanf(arquivo, "%d", &Ppm->imagem[i][j].g);
+					 fscanf(arquivo, "%d", &Ppm->imagem[i][j].b);
 			 }
 
 		fclose(arquivo);
@@ -99,8 +99,6 @@ void ler_ppm(struct ppm *Ppm){
 
 int main(int argc, char const *argv[])
 {
-	// *imagem
-	// ler_ppm(Ppm);
-	// printf("O codigo é: %s\n", Ppm.code);
+	ler_ppm(Ppm);
 	return 0;
 }
