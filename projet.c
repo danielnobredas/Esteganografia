@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "mod.h"
 #define MAX 500
+#define CREATOR "RPFELGUEIRAS"
+#define RGB_COMPONENT_COLOR 255
 
 typedef unsigned long DWORD;
 typedef unsigned long UINT;
@@ -40,8 +42,14 @@ typedef struct tagBITMAPINFOHEADER{
 }BITMAPINFOHEADER;
 
  typedef struct {
-	int r, g, b;
-} pixel;
+	unsigned char r, g, b;
+} PPMPixel;
+
+typedef struct {
+     int x, y;
+     PPMPixel *data;
+} PPMImage;
+
 
 typedef struct tagBITMAPINFO
 {
@@ -49,56 +57,10 @@ typedef struct tagBITMAPINFO
 	RGBQUAD bmiColors;
 }BITMAPINFO;
 
-// typedef{
-// 	int **imagem;
-// }Png;
+static PPMImage *ler_ppm(char *code, int *max, int *coluna, int *linha) {
 
- struct ppm{
-	char code;
-	int max;
-	int largura;
-	int altura;
- 	pixel **imagem;
-}Ppm;
-
-
-// void ler_ppm(struct ppm *Ppm){
-//
-// 		int i, j;
-// 		FILE *arquivo;
-//
-// 		char nome_arq[50];
-//     printf("entre com o nome do arquivo\n");
-//     scanf("%s", nome_arq);
-//
-//     if ((arquivo = fopen(nome_arq, "r")) == NULL) {
-//         printf("Erro ao abrir o arquivo %s\n", nome_arq);
-//         exit(1);
-//     }
-//
-//
-// 		fscanf(arquivo, "%s", Ppm->code);
-// 		fscanf(arquivo, "%d", Ppm.largura);
-// 		fscanf(arquivo, "%d", Ppm.altura);
-// 		fscanf(arquivo, "%d", Ppm.max);
-//
-// 	// 	for (i = 0; i < Ppm.altura; i++) {
-// 	// 		 for (j = 0; j < Ppm.largura; j++) {
-// 	// 				 fscanf(arquivo, "%d", &Ppm.imagem[i][j].r);
-// 	// 				 fscanf(arquivo, "%d", &Ppm.imagem[i][j].g);
-// 	// 				 fscanf(arquivo, "%d", &Ppm.imagem[i][j].b);
-// 	// 		 }
-// 	//  }
-//
-// 		fclose(arquivo);
-//
-// }
-
-
-void ler_ppm(pixel imagem[MAX][MAX], char *code, int *max, int *coluna, int *linha) {
-    int i, j;
     FILE *arquivo;
-
+		PPMImage *imagem;
     char nome_arq[50];
     printf("entre com o nome do arquivo\n");
     scanf("%s", nome_arq);
@@ -108,34 +70,68 @@ void ler_ppm(pixel imagem[MAX][MAX], char *code, int *max, int *coluna, int *lin
         exit(1);
     }
 
-    fscanf(arquivo, "%s", code);
-    fscanf(arquivo, "%d", coluna);
-    fscanf(arquivo, "%d", linha);
-    fscanf(arquivo, "%d", max);
-
-    for (i = 0; i < *linha; i++) {
-        for (j = 0; j < *coluna; j++) {
-            fscanf(arquivo, "%d", &imagem[i][j].r);
-            fscanf(arquivo, "%d", &imagem[i][j].g);
-            fscanf(arquivo, "%d", &imagem[i][j].b);
-        }
+		imagem = (PPMImage *)malloc(sizeof(PPMImage));
+    if (!imagem) {
+         fprintf(stderr, "Erro ao alocar memória\n");
+         exit(1);
     }
 
-    fclose(arquivo);
+    fscanf(arquivo, "%s", code);
+    fscanf(arquivo, "%d", &imagem->x);
+    fscanf(arquivo, "%d", &imagem->y);
+    fscanf(arquivo, "%d", max);
+
+
+		imagem->data = (PPMPixel*)malloc(imagem->x * imagem->y * sizeof(PPMPixel));
+
+		if (fread(imagem->data, 3 * imagem->x, imagem->y, arquivo) != imagem->y) {
+         fprintf(stderr, "Erro em carregar a imagem '%s'\n", nome_arq);
+         exit(1);
+    }
+
+  	fclose(arquivo);
+		return imagem;
+
 }
+
+void writePPM(const char *filename, PPMImage *img)
+{
+    FILE *fp;
+    //open file for output
+    fp = fopen(filename, "wb");
+    if (!fp) {
+         fprintf(stderr, "Unable to open file '%s'\n", filename);
+         exit(1);
+    }
+
+    //write the header file
+    //image format
+    fprintf(fp, "P6\n");
+
+    //comments
+    fprintf(fp, "# Created by %s\n",CREATOR);
+
+    //image size
+    fprintf(fp, "%d %d\n",img->x,img->y);
+
+    // rgb component depth
+    fprintf(fp, "%d\n",RGB_COMPONENT_COLOR);
+
+    // pixel data
+    fwrite(img->data, 3 * img->x, img->y, fp);
+    fclose(fp);
+}
+
 
 
 int main(int argc, char const *argv[])
 {
-	pixel imagem[MAX][MAX]; //cria uma matriz de pixeis para armazenar a imagem
 	char code[3]; //o código para saber se a imagem é ascii ou binária
 	int max; //o valor máximo de tonalidade de cada pixel
-	int larg, alt; // largura e altura da imagem em pixeis
-	ler_ppm(imagem, code, &max, &larg, &alt);
-	for (int i = 0; i < alt; i++) {
-		for(int j = 0.; j < larg; j++){
-			printf("O pixel é: %d %d %d\n", imagem[i][j].r, imagem[i][j].g, imagem[i][j].b);
-		}
-	};
+	int larg, alt; // largura e altura da imagem em pixe
+
+	PPMImage *imagem;
+	imagem = ler_ppm(code, &max, &larg, &alt);
+	writePPM("imd2.ppm",imagem);
 	return 0;
 }
