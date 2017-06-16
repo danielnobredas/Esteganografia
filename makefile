@@ -1,4 +1,4 @@
-PROG = Cript
+PROG = steg
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic -std=c11
 OBJS = projet.o
