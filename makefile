@@ -1,13 +1,13 @@
 PROG = Cript
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic -std=c11
-OBJS = teste.o wrPpm.o
+OBJS = projet.o wrPpm.o
 
 $(PROG): $(OBJS)
 	$(CC) -o $(PROG) $(OBJS)
 
-	teste.o:
-		$(CC) $(CFLAGS) -c teste.c
+	projet.o:
+		$(CC) $(CFLAGS) -c projet.c
 	wrPpm.o:
 		$(CC) $(CFLAGS) -c wrPpm.c		
 	clean:
