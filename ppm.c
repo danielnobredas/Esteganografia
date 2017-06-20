@@ -2,19 +2,9 @@
 #include <stdlib.h>
 #include "mod.h"
 
-static PPMImage *ler_ppm(char *code, int *max, int *coluna, int *linha) {
-
-    FILE *arquivo;
+static PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha) {
+    
 		PPMImage *imagem;
-    char nome_arq[50];
-    printf("entre com o nome do arquivo\n");
-    scanf("%s", nome_arq);
-
-    if ((arquivo = fopen(nome_arq, "r")) == NULL) {
-        printf("Erro ao abrir o arquivo %s\n", nome_arq);
-        exit(1);
-    }
-
 		imagem = (PPMImage *)malloc(sizeof(PPMImage));
     if (!imagem) {
          fprintf(stderr, "Erro ao alocar memória\n");
