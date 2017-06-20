@@ -69,4 +69,10 @@ unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *filePtr);
 
 void writePPM(const char *filename, PPMImage *img);
 
+int getBit (unsigned char byte, int pos);
+
+void setBit (unsigned char* byte, int pos, int valor);
+
+char* converteBin (unsigned char byte);
+
 #endif

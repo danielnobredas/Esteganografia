@@ -20,8 +20,8 @@ static PPMImage *ler_ppm(FILE *arquivo,char code,int *max, int *coluna, int *lin
 
 		imagem->data = (PPMPixel*)malloc(imagem->x * imagem->y * sizeof(PPMPixel));
  
-		if (fread(imagem->data, 3 * imagem->y,imagem->x arquivo) != imagem->y) {
-         fprintf(stderr, "Erro em carregar a imagem '%s'\n", nome_arq);
+		if (fread(imagem->data, 3 * imagem->y,imagem->x, arquivo) != imagem->y) {
+         fprintf(stderr, "Erro em carregar a imagem '%s'\n", "nome_arq");
          exit(1);
     }
 

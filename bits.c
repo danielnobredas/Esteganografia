@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "mod.h"
 
 int getBit (unsigned char byte, int pos) {
 	int valor;
@@ -28,7 +28,7 @@ char* converteBin (unsigned char byte) {
 	binario[8] = '\0';
 	return binario;
 }
-
+/*
 int main(int argc, char const *argv[])
 {
 	unsigned char letra = 'B';
@@ -43,4 +43,4 @@ int main(int argc, char const *argv[])
 	}
 	printf("%c - %d - %s\n", saida, saida, converteBin(saida));
 	return 0;
-}
+}*/

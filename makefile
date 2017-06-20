@@ -1,7 +1,7 @@
 PROG = Cript
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic -std=c11
-OBJS = projet.o wrPpm.o ppm.o lerBPM.o bits.o
+OBJS = projet.o wrPpm.o ppm.o lerBMP.o bits.o
 
 $(PROG): $(OBJS)
 	$(CC) -o $(PROG) $(OBJS)
@@ -14,7 +14,7 @@ $(PROG): $(OBJS)
 		$(CC) $(CFLAGS) -c wrPpm.c		
 	ppm.o:
 		$(CC) $(CFLAGS) -c ppm.c	
-	lerBPM.o:
-		$(CC) $(CFLAGS) -c lerBPM.c					
+	lerBMP.o:
+		$(CC) $(CFLAGS) -c lerBMP.c					
 	clean:
 		rm -f core $(PROG) $(OBJS)
