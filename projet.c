@@ -3,6 +3,8 @@
 #include <string.h>
 #include "mod.h"
 
+
+// Descobrir qual a extenção do arquivo
 const char *ext_arquivo(const char *nome_arq){
     const char *ponto = strrchr(nome_arq, '.');
     if(!ponto || ponto == nome_arq) return "";
@@ -14,7 +16,10 @@ int main(int argc, char const *argv[])
   char nome_arq[80];
   scanf("%s",nome_arq);
   FILE *arquivo=fopen(nome_arq,"r");
-	char code[3]; //o código para saber se a imagem é ascii ou binária
+	scanf("%s",nome_arq);
+  FILE *texto=fopen(nome_arq,"r");
+
+  char code[3]; //o código para saber se a imagem é ascii ou binária
 	int max; //o valor máximo de tonalidade de cada pixel
 	int larg, alt; // largura e altura da imagem em pixe
 	PPMImage *imagem;
