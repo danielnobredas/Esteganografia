@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "mod.h"
 
-static PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha) {
+static PPMImage *ler_ppm(FILE *arquivo,char code,int *max, int *coluna, int *linha) {
+
     
 		PPMImage *imagem;
 		imagem = (PPMImage *)malloc(sizeof(PPMImage));
@@ -19,7 +21,7 @@ static PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha) {
 
 		imagem->data = (PPMPixel*)malloc(imagem->x * imagem->y * sizeof(PPMPixel));
 
-		if (fread(imagem->data, 3 * imagem->x, imagem->y, arquivo) != imagem->y) {
+		if (fread(imagem->data, 3 * imagem->y,imagem->x arquivo) != imagem->y) {
          fprintf(stderr, "Erro em carregar a imagem '%s'\n", nome_arq);
          exit(1);
     }

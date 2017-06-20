@@ -61,9 +61,9 @@ typedef struct tagBITMAPINFO
 typedef struct{
 	char nomArq[80];
 	float tamanhoArq;
-}Arquivo
+}Arquivo;
 
-static PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha);
+static PPMImage *ler_ppm(FILE *arquivo,char code, int *max, int *coluna, int *linha);
 
 unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *filePtr);
 
