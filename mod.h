@@ -20,7 +20,6 @@ typedef unsigned long UINT;
 typedef unsigned long BYTE;
 typedef unsigned long LONG;
 typedef unsigned long WORD;
-typedef unsigned long BITMAPFILEHEADER;
 
 typedef struct tagBITMAPFILEHEADER{
 	UINT bfType;
@@ -28,7 +27,7 @@ typedef struct tagBITMAPFILEHEADER{
 	UINT bfReserved1;
 	UINT bfReserved2;
 	DWORD bfOffBitts;
-}tagBITMAPFILEHEADER;
+}BITMAPFILEHEADER;
 
 typedef struct tagRGBQUAD{
 	BYTE rgbBlue;
@@ -63,7 +62,7 @@ typedef struct{
 	float tamanhoArq;
 }Arquivo;
 
-static PPMImage *ler_ppm(FILE *arquivo,char code, int *max, int *coluna, int *linha);
+PPMImage *ler_ppm(FILE *arquivo,char code, int *max, int *coluna, int *linha);
 
 unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *filePtr);
 

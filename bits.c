@@ -12,7 +12,7 @@ int getBit (unsigned char byte, int pos) {
 
 void setBit (unsigned char* byte, int pos, int valor) {
 	unsigned char mascara;
-	unsigned char novoByte;
+	// unsigned char novoByte;
 	mascara = 0x1 << pos;
 	(*byte) &= (~mascara);
 	mascara = (unsigned char) valor << pos;
@@ -33,10 +33,10 @@ int main(int argc, char const *argv[])
 {
 	unsigned char letra = 'B';
 	printf("%c - %d - %s\n", letra, letra, converteBin(letra));
-	
+
 	unsigned char saida = 'A';
 	printf("%c - %d - %s\n", saida, saida, converteBin(saida));
-	
+
 	for (int i = 0; i <= 7; ++i)
 	{
 		setBit(&saida,i,getBit(letra, i));
