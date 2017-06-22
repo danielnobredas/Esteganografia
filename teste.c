@@ -47,7 +47,7 @@ typedef struct tagBITMAPINFO
 	RGBQUAD bmiColors;
 }BITMAPINFO;
 
-static PPMImage *ler_ppm(char *code, int *max, int *coluna, int *linha) {
+/*static PPMImage *ler_ppm(char *code, int *max, int *coluna, int *linha) {
 
     FILE *arquivo;
     PPMImage *imagem;
@@ -73,16 +73,16 @@ static PPMImage *ler_ppm(char *code, int *max, int *coluna, int *linha) {
 
 
     imagem->data = (PPMPixel*)malloc(imagem->x * imagem->y * sizeof(PPMPixel));
-
-    if (fread(imagem->data, 3 * imagem->x, imagem->y, arquivo) != imagem->y) {
-         fprintf(stderr, "Erro em carregar a imagem '%s'\n", nome_arq);
-         exit(1);
-    }
+    
+    // if (fread(imagem->data, 3 * imagem->x, imagem->y, arquivo) != imagem->y) {
+    //      fprintf(stderr, "Erro em carregar a imagem '%s'\n", nome_arq);
+    //      exit(1);
+    // }
 
     fclose(arquivo);
     return imagem;
 
-}
+}*/
 
 
 

@@ -1,29 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "mod.h"
+#define RGB_COMPONENT_COLOR 255
 
+void salvarPPM(const char *filename, PPMImage *img){
+  FILE *arq;
+  arq = fopen(filename, "wb");
+  if (!arq) {
+    printf("Não é possivel abrir o arquivo '%s'\n", filename);
+    exit(1);
+  }
 
-void writePPM(const char *filename, PPMImage *img)
-{
-    FILE *fp;
-    //open file for output
-    fp = fopen(filename, "wb");
-    if (!fp) {
-         fprintf(stderr, "Unable to open file '%s'\n", filename);
-         exit(1);
-    }
-
-    //write the header file
-    //image format
-    fprintf(fp, "P4\n");
-
-    //image size
-    fprintf(fp, "%d %d\n",img->x,img->y);
-
-    // rgb component depth
-    fprintf(fp, "%d\n",RGB_COMPONENT_COLOR);
-
-    // pixel data
-    fwrite(img->data, 3 * img->x, img->y, fp);
-    fclose(fp);
+  fprintf(arq, "P6\n");
+  fprintf(arq, "%d %d\n",img->x,img->y);
+  fprintf(arq, "%d\n",RGB_COMPONENT_COLOR);
+  fwrite(img->data, 3 * img->x, img->y, arq);
+  fclose(arq);
 }
