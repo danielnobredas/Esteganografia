@@ -78,9 +78,8 @@ int main(int argc, char** argv) {
 
     if (strcmp(format, "bmp") == 0){
       unsigned char *imagem;
-      BITMAPINFOHEADER bitmapInfoHeader;
 
-      imagem = lerBitMap(&bitmapInfoHeader, arquivo);
+      imagem = lerBitMap(arquivo);
     }
 
 

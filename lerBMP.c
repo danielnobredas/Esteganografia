@@ -3,13 +3,14 @@
 #include <string.h>
 #include "mod.h"
 
-unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *arquivo){
+unsigned char *lerBitMap(FILE *arquivo){
 
+    BITMAPINFOHEADER *bitmapInfoHeader;
     BITMAPFILEHEADER bitmapFileHeader;
     unsigned char *imagem;
     unsigned char auxRGB; //variavel auxiliar
 
-    fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER),1,arquivo);
+    fread(bitmapFileHeader, sizeof(BITMAPFILEHEADER),1,arquivo);
     fread(bitmapInfoHeader,sizeof(BITMAPINFOHEADER),1,arquivo);
 
     fseek(arquivo, bitmapFileHeader.bfOffBitts, SEEK_SET); //Procura o inicio dos dados bitmap

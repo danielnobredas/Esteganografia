@@ -66,6 +66,6 @@ PPMImage *ler_ppm(FILE *arquivo, char *code, int *max, int *coluna, int *linha);
 
 void salvarPPM(const char *filename, PPMImage *img);
 
-unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *filePtr);
+unsigned char *lerBitMap(FILE *arquivo);
 
 #endif
