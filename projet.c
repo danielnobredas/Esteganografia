@@ -5,12 +5,6 @@
 #include <getopt.h>
 #include "mod.h"
 
-void copiaString(char destino[], char origem[], int quantidade)
-{
-    for(int i = 0;i < quantidade; ++i)
-        destino[i] = origem[i];
-}
-
 const char *ext_arquivo(const char *nome_arq){
     const char *ponto = strrchr(nome_arq, '.');
     if(!ponto || ponto == nome_arq) return "";
@@ -55,7 +49,7 @@ int main(int argc, char** argv) {
 			// 					printf("Oi\n");
 			// 					break;
 			case 'f' :
-			copiaString(format, optarg, 10);
+			strcpy(format, optarg);
 			printf("O formato da imagem é %s\n", format);
 			break;
 		}
@@ -73,12 +67,22 @@ int main(int argc, char** argv) {
 
 
 	if (mode == 1){
-		int max;
-		int larg, alt;
-    char code[3];
-		PPMImage *imagem;
-		imagem = ler_ppm(arquivo, code, &max, &larg, &alt);
-		salvarPPM("imd2.ppm",imagem);
+    if (strcmp(format, "ppm") == 0){
+      int max;
+  		int larg, alt;
+      char code[3];
+  		PPMImage *imagem;
+  		imagem = ler_ppm(arquivo, code, &max, &larg, &alt);
+  		salvarPPM("imd2.ppm",imagem);
+    }
+
+    if (strcmp(format, "bmp") == 0){
+      unsigned char *imagem;
+      BITMAPINFOHEADER bitmapInfoHeader;
+
+      imagem = lerBitMap(&bitmapInfoHeader, arquivo);
+    }
+
 
 	}
 
