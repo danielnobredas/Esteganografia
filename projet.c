@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h> // *POSIX* Para o getopt() original
+#include <getopt.h>
 #include "mod.h"
 
 void copiaString(char destino[], char origem[], int quantidade)
