@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "mod.h"
 
 unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *arquivo){
@@ -20,22 +21,18 @@ unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *arquivo){
          exit(1);
     }
 
-    fread(imagem,bitmapInfoHeader->biSizeImage, 1, arquivo);
+    fread(imagem,bitmapInfoHeader->biSizeImage,1,arquivo);
 
     if (imagem==NULL) {
      	fprintf(stderr, "Erro ao alocar memória\n");
         exit(1);
     }
 
-   for(int i=0; i<bitmapInfoHeader->biSizeImage;i+=3){ //navega pelos pixels
+   for(int i = 0; i<bitmapInfoHeader->biSizeImage;i+=3){ //navega pelos pixels
    	auxRGB = imagem[i];
    	imagem[i] = imagem[i+2];
    	imagem[i+2] = auxRGB;
    }
-
-  //  unsigned char significativo;
-  //   significativo=imagem[i];
-  //   printf("%s\n",imagem[i]);
 
    return imagem;
 }
