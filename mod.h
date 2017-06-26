@@ -3,12 +3,14 @@
 #define RGB_COMPONENT_COLOR 255
 
 
-// #include <windows.h>
-#include <gl\gl.h>
-#include <gl\glu.h>
-#include <glaux.h>
-#include <iostream>
-#include <conio.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdint.h>
 
 
 /*STRUCTS PPM*/
@@ -32,11 +34,11 @@ typedef unsigned long WORD;
 typedef unsigned long BITMAPFILEHEADER;
 
 typedef struct tagBITMAPFILEHEADER{
-	UINT bfType;
-	DWORD bfsize;
-	UINT bfReserved1;
-	UINT bfReserved2;
-	DWORD bfOffBitts;
+	uint16_t bfType;
+	uint32_t bfsize;
+	uint16_t bfReserved1;
+	uint16_t bfReserved2;
+	uint32_t bfOffBitts;
 }tagBITMAPFILEHEADER;
 
 typedef struct tagRGBQUAD{
@@ -47,17 +49,17 @@ typedef struct tagRGBQUAD{
 }RGBQUAD;
 
 typedef struct tagBITMAPINFOHEADER{
-	DWORD biSize;
-	LONG biWidth;
-	LONG biHeight;
-	WORD biPlanes;
-	WORD biBitCount;
-	DWORD biCompression;
-	DWORD biSizeImage;
-	LONG biXPelsPerMeter;
-	LONG biYPelsPerMeter;
-	DWORD biClrUsed;
-	DWORD biClrImportant;
+	uint32_t biSize;
+	int32_t biWidth;
+	int32_t biHeight;
+	uint16_t biPlanes;
+	uint16_t biBitCount;
+	uint32_t biCompression;
+	uint32_t biSizeImage;
+	uint32_t biXPelsPerMeter;
+	uint32_t biYPelsPerMeter;
+	uint32_t biClrUsed;
+	uint32_t biClrImportant;
 }BITMAPINFOHEADER;
 
 typedef struct tagBITMAPINFO
