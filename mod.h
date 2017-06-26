@@ -2,6 +2,15 @@
 #define MOD_H
 #define RGB_COMPONENT_COLOR 255
 
+
+// #include <windows.h>
+#include <gl\gl.h>
+#include <gl\glu.h>
+#include <glaux.h>
+#include <iostream>
+#include <conio.h>
+
+
 /*STRUCTS PPM*/
 typedef struct {
     char r, g, b;
@@ -20,6 +29,7 @@ typedef unsigned long UINT;
 typedef unsigned long BYTE;
 typedef unsigned long LONG;
 typedef unsigned long WORD;
+typedef unsigned long BITMAPFILEHEADER;
 
 typedef struct tagBITMAPFILEHEADER{
 	UINT bfType;
@@ -27,7 +37,7 @@ typedef struct tagBITMAPFILEHEADER{
 	UINT bfReserved1;
 	UINT bfReserved2;
 	DWORD bfOffBitts;
-}BITMAPFILEHEADER;
+}tagBITMAPFILEHEADER;
 
 typedef struct tagRGBQUAD{
 	BYTE rgbBlue;
@@ -62,10 +72,16 @@ typedef struct{
 	float tamanhoArq;
 }Arquivo;
 
-PPMImage *ler_ppm(FILE *arquivo, char *code, int *max, int *coluna, int *linha);
+static PPMImage *ler_ppm(FILE *arquivo,char code, int *max, int *coluna, int *linha);
 
-void salvarPPM(const char *filename, PPMImage *img);
+unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *filePtr);
 
-unsigned char *lerBitMap(FILE *arquivo);
+void writePPM(const char *filename, PPMImage *img);
+
+int getBit (unsigned char byte, int pos);
+
+void setBit (unsigned char* byte, int pos, int valor);
+
+char* converteBin (unsigned char byte);
 
 #endif

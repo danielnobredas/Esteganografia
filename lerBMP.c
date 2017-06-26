@@ -10,8 +10,15 @@ unsigned char *lerBitMap(FILE *arquivo){
     unsigned char *imagem;
     unsigned char auxRGB; //variavel auxiliar
 
-    fread(bitmapFileHeader, sizeof(BITMAPFILEHEADER),1,arquivo);
-    fread(bitmapInfoHeader,sizeof(BITMAPINFOHEADER),1,arquivo);
+    fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER),1,arquivo);
+
+    if (bitmapFileHeader.bfType !=0x4D42){
+      fclose(arquivo);
+      fprintf(stderr, "Imagem Invalida \n");
+      exit(1);
+  }
+
+    fread(&bitmapInfoHeader,sizeof(BITMAPINFOHEADER),1,arquivo);
 
     fseek(arquivo, bitmapFileHeader.bfOffBitts, SEEK_SET); //Procura o inicio dos dados bitmap
 

@@ -82,6 +82,21 @@ int main(int argc, char** argv) {
       imagem = lerBitMap(arquivo);
     }
 
+    if (mode == 2){
+      if (strcmp(format, "ppm") == 0){
+        int max;
+    		int larg, alt;
+        char code[3];
+    		PPMImage *imagem;
+    		imagem = ler_ppm(arquivo, code, &max, &larg, &alt);
+    		salvarPPM("imd2.ppm",imagem);
+      }
+
+      if (strcmp(format, "bmp") == 0){
+        unsigned char *imagem;
+
+        imagem = lerBitMap(arquivo);
+      }
 
 	}
 
