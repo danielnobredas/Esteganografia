@@ -5,18 +5,13 @@
 #include <getopt.h>
 #include "mod.h"
 
-const char *ext_arquivo(const char *nome_arq){
-  const char *ponto = strrchr(nome_arq, '.');
-  if(!ponto || ponto == nome_arq) return "";
-  return ponto + 1;
-
-}
-
 int main(int argc, char** argv) {
 
-  FILE *arquivo;
-  FILE *input;
 
+  FILE *arquivo; //Declaração do arquivo de imagem
+  FILE *input; //Declaração do arquivo de texto
+
+  //Variaveis para parametros
   int mode;
   char format[10];
   char optc = 0;
@@ -33,11 +28,12 @@ int main(int argc, char** argv) {
   };
 
 
-  if(argc == 1) { // Sem argumentos
+  if(argc == 1) { // No caso de não ter argumentos
     printf("Parametros faltando\n");
     exit(0);
   }
 
+//Leitura dos parametros
   while((optc = getopt_long(argc, argv, "edi:f:", OpcoesLongas, NULL)) != -1) {
     switch(optc) {
       case 'e' :
@@ -57,13 +53,13 @@ int main(int argc, char** argv) {
         printf("Erro ao abrir o arquivo %s\n", optarg);
         return 1;
       }
+      //Formato do arquivo
       case 'f' :
       strcpy(format, optarg);
-      printf("O formato da imagem é %s\n", format);
       break;
     }
   }
-
+//Caso de erro ao abrir o arquivo
   if(optind < argc) {
     do {
       if ((arquivo = fopen(argv[optind], "r")) == NULL) {
@@ -74,23 +70,27 @@ int main(int argc, char** argv) {
     while(++optind < argc);
   }
 
-
+//tipo de arquivo para encriptar
   if (mode == 1){
     if (strcmp(format, "ppm") == 0){
       int max;
       int larg, alt;
       PPMImage *imagem;
       imagem = ler_ppm(arquivo, &max, &larg, &alt);
-      salvarPPM("imd2.ppm",codificarMsg(input, imagem));
-    }
+      codificarMsg(input,imagem);
+      salvarPPM("imd2.ppm",arquivo);
+    } else
 
     if (strcmp(format, "bmp") == 0){
       BMPFile imagem;
       imagem = lerBitMap(arquivo);
 
+    }else{
+      printf("O formato de arquivo: '%s' não é suportado\n",format);
+      return 1;
     }
   }
-
+//tipo de arquivo para decriptar
   if (mode == 2){
     if (strcmp(format, "ppm") == 0){
       int max;

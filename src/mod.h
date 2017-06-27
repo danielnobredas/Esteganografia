@@ -3,7 +3,7 @@
 #define RGB_COMPONENT_COLOR 255
 
 
-
+//Bibliotecas utilizadas
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -75,7 +75,7 @@ typedef struct{
 	char nomArq[80];
 	float tamanhoArq;
 }Arquivo;
-
+/*FUNCOES DO CODIGO*/
 PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha);
 
 BMPFile lerBitMap(FILE *filePtr);
@@ -90,10 +90,11 @@ char* converteBin (unsigned char byte);
 
 PPMImage *codificarMsg(FILE *arquivo, PPMImage *image);
 
+void decodificarMsg(PPMImage *imagem);
+
 char *convertFileToText(FILE *arquivo);
 
 BMPFile *codificarMsgBMP(FILE *arquivo, BMPFile *imagem);
 
-void decodificarMsg(PPMImage *imagem);
 
 #endif

@@ -3,24 +3,24 @@
 #include <string.h>
 #include "mod.h"
 
-
+//Ler o arquivo de imagem PPM
 PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha) {
 
   PPMImage *imagem;
   char code[3];
-  imagem = (PPMImage *)malloc(sizeof(PPMImage));
-  if (!imagem) {
+  imagem = (PPMImage *)malloc(sizeof(PPMImage));//Aloca o espaço de memoria
+  if (!imagem) { //caso nao tenha espaço
     fprintf(stderr, "Erro ao alocar memória\n");
     exit(1);
   }
-
-  fscanf(arquivo, "%s", code);
-  fscanf(arquivo, "%d %d", &imagem->x,&imagem->y);
+//Le o cabeçalho e adiciona as variaveis
+  fscanf(arquivo, "%s", code);//Tipo de imagem
+  fscanf(arquivo, "%d %d", &imagem->x,&imagem->y); //Dimensao da imagem
   // fscanf(arquivo, "%d", &imagem->y);
-  fscanf(arquivo, "%d", max);
+  fscanf(arquivo, "%d", max);//Intensidade
 
 
-  imagem->data = (PPMPixel*)malloc(imagem->x * imagem->y * sizeof(PPMPixel));
+  imagem->data = (PPMPixel*)malloc(imagem->x * imagem->y * sizeof(PPMPixel)); //dados da imagem
 
   if (fread(imagem->data, 3 * imagem->x, imagem->y, arquivo) != imagem->y) {
     fprintf(stderr, "Erro em carregar a imagem\n");
@@ -31,10 +31,10 @@ PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha) {
   return imagem;
 
 }
-
+//Converte o arquivo de texto em string
 char *convertFileToText(FILE *arquivo) {
   long size;
-  char *texto;
+  unsigned char *texto;
 
   fseek(arquivo, 0L, SEEK_END);
   size = ftell(arquivo);
@@ -53,11 +53,13 @@ char *convertFileToText(FILE *arquivo) {
     fprintf(stderr, "Não é possivel ler esse arquivo.");
     exit(1);
   }
+  printf("\n");
+
   fclose(arquivo);
   return texto;
 }
 
-
+//Converte a string em binario e adiciona o valor aos bits dos pixeis da imagem
 PPMImage *codificarMsg(FILE *arquivo, PPMImage *imagem){
 
 
@@ -70,11 +72,12 @@ PPMImage *codificarMsg(FILE *arquivo, PPMImage *imagem){
   int counter = 0;
 
   msgBits = malloc(countString);
+  *msgBits=converteBin(*msg);
 
   if (imagem) {
-
+//determina o tamanho da imagem
     int imgSize = 3 * imagem->y * imagem->x;
-
+//caso o texto for maior que a imagem
     if ((strlen(msg) + sizeof(char)) * sizeof(char) > imgSize * sizeof(char)) {
       fprintf(stderr, "Mensagem muito grande.");
       exit(1);
@@ -86,7 +89,7 @@ PPMImage *codificarMsg(FILE *arquivo, PPMImage *imagem){
       }
 
       int index = 0;
-
+//Adiciona os pixeis da mensagem ao RGB da imagem
       for (i = 0; i < countString; i++) {
         if (*(msgBits + index) != (imagem->data[i].r % 2)) {
           imagem->data[i].r = (imagem->data[i].r & 0xFE) | *(msgBits + index);
@@ -105,6 +108,7 @@ PPMImage *codificarMsg(FILE *arquivo, PPMImage *imagem){
       }
     }
   }
+  
   return imagem;
 }
 
@@ -134,7 +138,7 @@ void decodificarMsg(PPMImage *imagem){
   }
 }
 
-
+//Escreve o arquivo de imagem criptografada
 void salvarPPM(const char *filename, PPMImage *img){
   FILE *arq;
   arq = fopen(filename, "wb");
