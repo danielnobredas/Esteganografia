@@ -70,32 +70,27 @@ int main(int argc, char** argv) {
     if (strcmp(format, "ppm") == 0){
       int max;
   		int larg, alt;
-      char code[3];
   		PPMImage *imagem;
-  		imagem = ler_ppm(arquivo, code, &max, &larg, &alt);
+  		imagem = ler_ppm(arquivo, &max, &larg, &alt);
   		salvarPPM("imd2.ppm",imagem);
     }
 
     if (strcmp(format, "bmp") == 0){
-      unsigned char *imagem;
-
+      BMPFile imagem;
       imagem = lerBitMap(arquivo);
     }
+  }
 
     if (mode == 2){
-      if (strcmp(format, "ppm") == 0){
-        int max;
-    		int larg, alt;
-        char code[3];
-    		PPMImage *imagem;
-    		imagem = ler_ppm(arquivo, code, &max, &larg, &alt);
-    		salvarPPM("imd2.ppm",imagem);
-      }
+      // if (strcmp(format, "ppm") == 0){
+      //   int max;
+    	// 	int larg, alt;
+    	// 	PPMImage *imagem;
+    	// 	imagem = ler_ppm(arquivo, &max, &larg, &alt);
+    	// 	salvarPPM("imd2.ppm",imagem);
+      // }
 
       if (strcmp(format, "bmp") == 0){
-        unsigned char *imagem;
-
-        imagem = lerBitMap(arquivo);
       }
 
 	}

@@ -4,9 +4,10 @@
 #include "mod.h"
 
 
-PPMImage *ler_ppm(FILE *arquivo, char *code, int *max, int *coluna, int *linha) {
+PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha) {
 
   PPMImage *imagem;
+  char code[3];
   imagem = (PPMImage *)malloc(sizeof(PPMImage));
   if (!imagem) {
     fprintf(stderr, "Erro ao alocar memória\n");

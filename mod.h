@@ -26,26 +26,19 @@ typedef struct {
 #define MAX 500
 #define RGB_COMPONENT_COLOR 255
 
-typedef unsigned long DWORD;
-typedef unsigned long UINT;
-typedef unsigned long BYTE;
-typedef unsigned long LONG;
-typedef unsigned long WORD;
-typedef unsigned long BITMAPFILEHEADER;
-
 typedef struct tagBITMAPFILEHEADER{
 	uint16_t bfType;
 	uint32_t bfsize;
 	uint16_t bfReserved1;
 	uint16_t bfReserved2;
 	uint32_t bfOffBitts;
-}tagBITMAPFILEHEADER;
+}BITMAPFILEHEADER;
 
 typedef struct tagRGBQUAD{
-	BYTE rgbBlue;
-	BYTE rgbGreen;
-	BYTE rgbRed;
-	BYTE rgbReserved;
+	uint32_t rgbBlue;
+	uint32_t rgbGreen;
+	uint32_t rgbRed;
+	uint32_t rgbReserved;
 }RGBQUAD;
 
 typedef struct tagBITMAPINFOHEADER{
@@ -68,17 +61,26 @@ typedef struct tagBITMAPINFO
 	RGBQUAD bmiColors;
 }BITMAPINFO;
 
+#pragma pack(push, 1)
+typedef struct {
+  BITMAPFILEHEADER fileHeader;
+  BITMAPINFOHEADER infoHeader;
+  unsigned char *imageData;
+} BMPFile;
+#pragma pack(pop)
+
+
 /*STRUCT FILE*/
 typedef struct{
 	char nomArq[80];
 	float tamanhoArq;
 }Arquivo;
 
-static PPMImage *ler_ppm(FILE *arquivo,char code, int *max, int *coluna, int *linha);
+PPMImage *ler_ppm(FILE *arquivo, int *max, int *coluna, int *linha);
 
-unsigned char *lerBitMap(BITMAPINFOHEADER *bitmapInfoHeader,FILE *filePtr);
+BMPFile lerBitMap(FILE *filePtr);
 
-void writePPM(const char *filename, PPMImage *img);
+void salvarPPM(const char *filename, PPMImage *img);
 
 int getBit (unsigned char byte, int pos);
 
