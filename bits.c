@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "mod.h"
+// #include "mod.h"
 
 int getBit (unsigned char byte, int pos) {
 	int valor;
@@ -28,19 +28,19 @@ char* converteBin (unsigned char byte) {
 	binario[8] = '\0';
 	return binario;
 }
-/*
-int main(int argc, char const *argv[])
-{
-	unsigned char letra = 'B';
-	printf("%c - %d - %s\n", letra, letra, converteBin(letra));
 
-	unsigned char saida = 'A';
-	printf("%c - %d - %s\n", saida, saida, converteBin(saida));
-
-	for (int i = 0; i <= 7; ++i)
-	{
-		setBit(&saida,i,getBit(letra, i));
-	}
-	printf("%c - %d - %s\n", saida, saida, converteBin(saida));
-	return 0;
-}*/
+// int main(int argc, char const *argv[])
+// {
+// 	unsigned char letra = 'B';
+// 	printf("%c - %d - %s\n", letra, letra, converteBin(letra));
+//
+// 	unsigned char saida = 'A';
+// 	printf("%c - %d - %s\n", saida, saida, converteBin(saida));
+//
+// 	for (int i = 0; i <= 7; ++i)
+// 	{
+// 		setBit(&saida,i,getBit(letra, i));
+// 	}
+// 	printf("%c - %d - %s\n", saida, saida, converteBin(saida));
+// 	return 0;
+// }

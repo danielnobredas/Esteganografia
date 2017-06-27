@@ -88,4 +88,6 @@ void setBit (unsigned char* byte, int pos, int valor);
 
 char* converteBin (unsigned char byte);
 
+PPMImage *codificarMsg(FILE *arquivo, PPMImage *image);
+
 #endif
