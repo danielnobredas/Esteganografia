@@ -7,7 +7,7 @@ BMPFile lerBitMap(FILE *arquivo){
 
   BITMAPINFOHEADER bitmapInfoHeader;
   BITMAPFILEHEADER bitmapFileHeader;
-  unsigned char *imageData;
+  RGBQUAD *imageData;
   // unsigned char auxRGB; //variavel auxiliar
   BMPFile imagem;
 
@@ -30,7 +30,7 @@ BMPFile lerBitMap(FILE *arquivo){
 
   fseek(arquivo, bitmapFileHeader.bfOffBitts, SEEK_SET); //Procura o inicio dos dados bitmap
 
-  imageData = (unsigned char*)malloc(bitmapInfoHeader.biSizeImage);
+  imageData = (RGBQUAD*)malloc(bitmapInfoHeader.biSizeImage);
 
   if (!imageData) {
     fprintf(stderr, "Erro ao alocar memória\n");
@@ -70,9 +70,9 @@ BMPFile *codificarMsgBMP(FILE *arquivo, BMPFile *imagem){
 
   if (imagem) {
 
-    int imgSize = 3 * imagem->y * imagem->x;
+    // unsigned char  imgSize = imagem.infoHeader;
 
-    if ((strlen(msg) + sizeof(char)) * sizeof(char) > imgSize * sizeof(char)) {
+    if ((strlen(msg) + sizeof(char)) * sizeof(char) > imagem->infoHeader.biSizeImage * sizeof(char)) {
       fprintf(stderr, "Mensagem muito grande.");
       exit(1);
     } else {

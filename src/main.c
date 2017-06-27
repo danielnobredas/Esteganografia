@@ -56,54 +56,54 @@ int main(int argc, char** argv) {
       if ((input = fopen(optarg, "w")) == NULL) {
         printf("Erro ao abrir o arquivo %s\n", optarg);
         return 1;
-        fopen(, "w");
-        case 'f' :
-        strcpy(format, optarg);
-        printf("O formato da imagem é %s\n", format);
-        break;
       }
+      case 'f' :
+      strcpy(format, optarg);
+      printf("O formato da imagem é %s\n", format);
+      break;
     }
-
-    if(optind < argc) {
-      do {
-        if ((arquivo = fopen(argv[optind], "r")) == NULL) {
-          printf("Erro ao abrir o arquivo %s\n", argv[optind]);
-          return 1;
-        }
-      }
-      while(++optind < argc);
-    }
-
-
-    if (mode == 1){
-      if (strcmp(format, "ppm") == 0){
-        int max;
-        int larg, alt;
-        PPMImage *imagem;
-        imagem = ler_ppm(arquivo, &max, &larg, &alt);
-        salvarPPM("imd2.ppm",codificarMsg(input, imagem));
-      }
-
-      if (strcmp(format, "bmp") == 0){
-        BMPFile imagem;
-        imagem = lerBitMap(arquivo);
-
-      }
-    }
-
-    if (mode == 2){
-      if (strcmp(format, "ppm") == 0){
-        int max;
-        int larg, alt;
-        PPMImage *imagem;
-        imagem = ler_ppm(arquivo, &max, &larg, &alt);
-        decodificarMsg(imagem);
-      }
-
-      if (strcmp(format, "bmp") == 0){
-      }
-
-    }
-
-    return 0;
   }
+
+  if(optind < argc) {
+    do {
+      if ((arquivo = fopen(argv[optind], "r")) == NULL) {
+        printf("Erro ao abrir o arquivo %s\n", argv[optind]);
+        return 1;
+      }
+    }
+    while(++optind < argc);
+  }
+
+
+  if (mode == 1){
+    if (strcmp(format, "ppm") == 0){
+      int max;
+      int larg, alt;
+      PPMImage *imagem;
+      imagem = ler_ppm(arquivo, &max, &larg, &alt);
+      salvarPPM("imd2.ppm",codificarMsg(input, imagem));
+    }
+
+    if (strcmp(format, "bmp") == 0){
+      BMPFile imagem;
+      imagem = lerBitMap(arquivo);
+
+    }
+  }
+
+  if (mode == 2){
+    if (strcmp(format, "ppm") == 0){
+      int max;
+      int larg, alt;
+      PPMImage *imagem;
+      imagem = ler_ppm(arquivo, &max, &larg, &alt);
+      decodificarMsg(imagem);
+    }
+
+    if (strcmp(format, "bmp") == 0){
+    }
+
+  }
+
+  return 0;
+}

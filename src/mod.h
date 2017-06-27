@@ -90,6 +90,8 @@ char* converteBin (unsigned char byte);
 
 PPMImage *codificarMsg(FILE *arquivo, PPMImage *image);
 
+char *convertFileToText(FILE *arquivo);
+
 BMPFile *codificarMsgBMP(FILE *arquivo, BMPFile *imagem);
 
 void decodificarMsg(PPMImage *imagem);
