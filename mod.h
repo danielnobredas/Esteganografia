@@ -15,7 +15,7 @@
 
 /*STRUCTS PPM*/
 typedef struct {
-    char r, g, b;
+    unsigned char r, g, b;
 } PPMPixel;
 
 typedef struct {
@@ -65,7 +65,7 @@ typedef struct tagBITMAPINFO
 typedef struct {
   BITMAPFILEHEADER fileHeader;
   BITMAPINFOHEADER infoHeader;
-  unsigned char *imageData;
+  RGBQUAD *imageData;
 } BMPFile;
 #pragma pack(pop)
 
@@ -89,5 +89,9 @@ void setBit (unsigned char* byte, int pos, int valor);
 char* converteBin (unsigned char byte);
 
 PPMImage *codificarMsg(FILE *arquivo, PPMImage *image);
+
+BMPFile *codificarMsgBMP(FILE *arquivo, BMPFile *imagem);
+
+void decodificarMsg(PPMImage *imagem);
 
 #endif

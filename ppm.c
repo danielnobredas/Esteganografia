@@ -58,62 +58,94 @@ char *convertFileToText(FILE *arquivo) {
 }
 
 
-PPMImage *codificarMsg(FILE *arquivo, PPMImage *image){
+PPMImage *codificarMsg(FILE *arquivo, PPMImage *imagem){
 
 
-  char *message = convertFileToText(arquivo);
-  char *message_bits;
+  char *msg = convertFileToText(arquivo);
+  char *msgBits;
 
   int i;
-  //Get the bit amount in the message
-  int string_bits_count = strlen(message) * sizeof(char) * 8;
-  printf("String bits count: %d\n", string_bits_count);
+
+  int countString = strlen(msg) * sizeof(char) * 8;
   int counter = 0;
 
-  //Alloc the array that will hold the message's bits
-  message_bits = malloc(string_bits_count);
+  msgBits = malloc(countString);
 
-  if (image) {
+  if (imagem) {
 
-    int image_size = 3 * image->y * image->x;
-    printf("Image size: %d\n", image_size);
+    int imgSize = 3 * imagem->y * imagem->x;
 
-    //Check if image will hold the entire message plus the escape character
-    if ((strlen(message) + sizeof(char)) * sizeof(char) > image_size * sizeof(char)) {
-      fprintf(stderr, "Message too long for the selected image");
+    if ((strlen(msg) + sizeof(char)) * sizeof(char) > imgSize * sizeof(char)) {
+      fprintf(stderr, "Mensagem muito grande.");
       exit(1);
     } else {
-      //Set the message bits in the array, note that the array holds the
-      //inverted message
-      while (counter < string_bits_count) {
-        *(message_bits + counter) = ((*message) % 2);
-        //printf("Counter: %d\n", counter);
-        *message = *message >> 1;
-        //printf("Message bit: %c\n", *(message_bits + counter));
+      while (counter < countString) {
+        *(msgBits + counter) = ((*msg) % 2);
+        *msg = *msg >> 1;
         counter++;
       }
 
-      int bit_index = 0;
+      int index = 0;
 
-      for (i = 0; i < string_bits_count; i++) {
-        if (*(message_bits + bit_index) != (image->data[i].r % 2)) {
-          //printf("Original data: %d\n", image->data[i].red);
-          image->data[i].r = (image->data[i].r & 0xFE) | *(message_bits + bit_index);
-          //printf("New data: %d\n", image->data[i].red);
+      for (i = 0; i < countString; i++) {
+        if (*(msgBits + index) != (imagem->data[i].r % 2)) {
+          imagem->data[i].r = (imagem->data[i].r & 0xFE) | *(msgBits + index);
         }
-        bit_index++;
+        index++;
 
-        if (*(message_bits + bit_index) != (image->data[i].g % 2)) {
-          image->data[i].g = (image->data[i].g & 0xFE) | *(message_bits + bit_index);
+        if (*(msgBits + index) != (imagem->data[i].g % 2)) {
+          imagem->data[i].g = (imagem->data[i].g & 0xFE) | *(msgBits + index);
         }
-        bit_index++;
+        index++;
 
-        if (*(message_bits + bit_index) != (image->data[i].b % 2)) {
-          image->data[i].b = (image->data[i].b & 0xFE) | *(message_bits + bit_index);
+        if (*(msgBits + index) != (imagem->data[i].b % 2)) {
+          imagem->data[i].b = (imagem->data[i].b & 0xFE) | *(msgBits + index);
         }
-        bit_index++;
+        index++;
       }
     }
   }
-      return image;
+  return imagem;
+}
+
+void decodificarMsg(PPMImage *imagem){
+
+  int i, j, k;
+  char *msg;
+  // FILE *saida = fopen("saida.txt","a");
+
+  int imgSize= 3* imagem->x * imagem->y;
+
+  msg=malloc(imgSize);
+
+  if(imagem){
+    for (i = 0, j =0; (i < imgSize) && (j < 8); i++, j++) {
+      // printf("%u\n",imagem->data[i].g);
+      setBit(&msg[k],j,getBit(imagem->data[i].r, 7));
+      setBit(&msg[k],j,getBit(imagem->data[i].g, 7));
+      setBit(&msg[k],j,getBit(imagem->data[i].b, 7));
+      if (j== 7) {
+        printf("%u\n", *msg);
+        j = 0;
+        k++;
+      }
+    }
+    printf("%s\n",converteBin(*msg));
   }
+}
+
+
+void salvarPPM(const char *filename, PPMImage *img){
+  FILE *arq;
+  arq = fopen(filename, "wb");
+  if (!arq) {
+    printf("Não é possivel abrir o arquivo '%s'\n", filename);
+    exit(1);
+  }
+
+  fprintf(arq, "P6\n");
+  fprintf(arq, "%d %d\n",img->x,img->y);
+  fprintf(arq, "%d\n",RGB_COMPONENT_COLOR);
+  fwrite(img->data, 3 * img->x, img->y, arq);
+  fclose(arq);
+}
