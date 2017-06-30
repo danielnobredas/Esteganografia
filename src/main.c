@@ -42,9 +42,11 @@ int main(int argc, char** argv) {
     switch(optc) {
       case 'e' :
       mode = 1;
+      printf("Rodando em modo 'Enconder'%s\n", format);
       break;
       case 'd' :
       mode = 2;
+        printf("Rodando em modo 'Decoder'%s\n", format);
       break;
       case 'i' :
       if ((input = fopen(optarg, "r")) == NULL) {
@@ -59,7 +61,6 @@ int main(int argc, char** argv) {
       }
       case 'f' :
       strcpy(format, optarg);
-      printf("O formato da imagem é %s\n", format);
       break;
     }
   }
@@ -85,8 +86,8 @@ int main(int argc, char** argv) {
     }
 
     if (strcmp(format, "bmp") == 0){
-      BMPFile imagem;
-      imagem = lerBitMap(arquivo);
+      // BMPFile imagem;
+      // imagem = lerBitMap(arquivo);
 
     }
   }

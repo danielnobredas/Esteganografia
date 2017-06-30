@@ -72,7 +72,6 @@ PPMImage *codificarMsg(FILE *arquivo, PPMImage *imagem){
   msgBits = malloc(countString);
 
   if (imagem) {
-
     int imgSize = 3 * imagem->y * imagem->x;
 
     if ((strlen(msg) + sizeof(char)) * sizeof(char) > imgSize * sizeof(char)) {
@@ -111,7 +110,7 @@ PPMImage *codificarMsg(FILE *arquivo, PPMImage *imagem){
 void decodificarMsg(PPMImage *imagem){
 
   int i, j, k;
-  char *msg;
+  unsigned char *msg;
   // FILE *saida = fopen("saida.txt","a");
 
   int imgSize= 3* imagem->x * imagem->y;
