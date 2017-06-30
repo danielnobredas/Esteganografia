@@ -15,8 +15,3 @@ $ make
 ```sh
 ./steg -e -i <input-file> -f <format> <image>
 ```
--e indica que o programa deve rodar em modo de codificador (encoder)
--i <input-file> indica o arquivo de entrada (input) a ser codificado na imagem
--f <format> indica o formato da imagem a ser usada como hospedeira para a mensagem. Os
-valores possíveis para <format> são: bmp ou ppm
-<image> imagem a ser usada como hospedeira para a mensagem
